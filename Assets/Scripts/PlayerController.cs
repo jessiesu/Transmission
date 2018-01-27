@@ -29,23 +29,36 @@ public class PlayerController : MonoBehaviour {
     public float boostCooldown;
     public float boostSpeedMultiplier;
     public float boostDuration;
+    public float shootCooldown;
+    public float shootSpeed;
+    public GameObject shootPrefab;
 
     private List<PlayerAction> moveset = new List<PlayerAction>();
     private float speedMultiplier = 1.0f;
 	private Rigidbody2D rb2d;		//Store a reference to the Rigidbody2D component required to use 2D Physics.
 
-
-	// Use this for initialization
 	void Start()
 	{
 		//Get and store a reference to the Rigidbody2D component so that we can access it.
 		rb2d = GetComponent<Rigidbody2D> ();
         moveset.Add(new PlayerAction(KeyCode.LeftShift, boostCooldown, Boost));
+        moveset.Add(new PlayerAction(KeyCode.Mouse0, shootCooldown, Shoot));
 	}
 
     void Boost()
     {
         speedMultiplier = boostSpeedMultiplier;
+    }
+
+    void Shoot()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 bulletVector = (new Vector2(mousePos.x, mousePos.y) - rb2d.position).normalized;
+        GameObject projectile = Instantiate(shootPrefab);
+        Rigidbody2D projRb2d = (Rigidbody2D) projectile.GetComponent<Rigidbody2D>();
+        CircleCollider2D projCollider = (CircleCollider2D) this.GetComponent<CircleCollider2D>();
+        projRb2d.position = rb2d.position + (projCollider.radius * bulletVector);
+        projRb2d.velocity = bulletVector * shootSpeed;
     }
 
 	//FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
@@ -72,6 +85,12 @@ public class PlayerController : MonoBehaviour {
 		float moveVertical = Input.GetAxis ("Vertical");
 		Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
 		rb2d.velocity = movement * speed * speedMultiplier;
+
+        // rotate the player toward the mouse direction
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mouseVector = (new Vector2(mousePos.x, mousePos.y) - rb2d.position).normalized;
+        float targetRotation = (Mathf.Atan2(mouseVector.y, mouseVector.x) * Mathf.Rad2Deg - 90) % 360;
+        rb2d.rotation = targetRotation;
 	}
 
 	//OnTriggerEnter2D is called whenever this object overlaps with a trigger collider.
