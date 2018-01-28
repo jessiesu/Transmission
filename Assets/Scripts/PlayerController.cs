@@ -25,14 +25,16 @@ internal class PlayerAction
 public class PlayerController : MonoBehaviour {
 
     // Tunable parameters
-	public float speed;
-    public float boostCooldown;
-    public float boostSpeedMultiplier;
-    public float boostDuration;
-    public float shootCooldown;
-    public float shootSpeed;
+	public float speed = 10;
+    public float boostCooldown = 6;
+    public float boostSpeedMultiplier = 3;
+    public float boostDuration = 3;
+    public float shootCooldown = 0.2f;
+    public float phaseCooldown = 0.5f;
+    public float shootSpeed = 20;
     public GameObject shootPrefab;
 
+    private GameManager gm;
     private List<PlayerAction> moveset = new List<PlayerAction>();
     private float speedMultiplier = 1.0f;
 	private Rigidbody2D rb2d;		//Store a reference to the Rigidbody2D component required to use 2D Physics.
@@ -43,6 +45,10 @@ public class PlayerController : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D> ();
         moveset.Add(new PlayerAction(KeyCode.LeftShift, boostCooldown, Boost));
         moveset.Add(new PlayerAction(KeyCode.Mouse0, shootCooldown, Shoot));
+        moveset.Add(new PlayerAction(KeyCode.Space, phaseCooldown, PhaseSwitch));
+
+        GameObject gmGo = GameObject.Find("_GM");
+        gm = (GameManager)gmGo.GetComponent<GameManager>();
 	}
 
     void Boost()
@@ -59,6 +65,12 @@ public class PlayerController : MonoBehaviour {
         CircleCollider2D projCollider = (CircleCollider2D) this.GetComponent<CircleCollider2D>();
         projRb2d.position = rb2d.position + (projCollider.radius * bulletVector);
         projRb2d.velocity = bulletVector * shootSpeed;
+    }
+
+    void PhaseSwitch()
+    {
+        PhaseState newState = gm.CurrentPhase == PhaseState.Blue ? PhaseState.Red : PhaseState.Blue;
+        gm.ChangePhase(newState);
     }
 
 	//FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.

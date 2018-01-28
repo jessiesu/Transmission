@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileController : MonoBehaviour {
+public class ProjectileController : PhasedGameObject {
 
     private float lifetime = 10;
     private float age = 0;
+
+    new void Start()
+    {
+        // call base "Start" function (PhasedGameObject)
+        base.Start();
+    }
 	
 	// Update is called once per frame
 	void Update () {
