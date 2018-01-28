@@ -4,7 +4,7 @@ using Pathfinding;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Seeker))]
-public class BasicEnemy : MonoBehaviour {
+public class BasicEnemy : PhasedGameObject {
 
     public float updateRate = 2.0f;         // seconds before the path updates
     public Path path;
@@ -20,7 +20,7 @@ public class BasicEnemy : MonoBehaviour {
     private Rigidbody2D rb;
     private int currentWaypoint = 0;
 
-    private void Start()
+    new void Start()
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
@@ -37,6 +37,8 @@ public class BasicEnemy : MonoBehaviour {
         seeker.StartPath(transform.position, target.position, OnPathComplete);
 
         StartCoroutine(UpdatePath());
+        // call base "Start" function (PhasedGameObject)
+        base.Start();
     }
 
     private IEnumerator UpdatePath()

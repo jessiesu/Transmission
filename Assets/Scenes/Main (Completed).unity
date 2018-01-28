@@ -741,11 +741,6 @@ Prefab:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 114810891193610894, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d,
-        type: 2}
-      propertyPath: shootPrefab
-      value: 
-      objectReference: {fileID: 152844, guid: a02cd56951325b645973551f0bae4cc0, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d, type: 2}
   m_IsPrefabParent: 0
@@ -1042,6 +1037,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2061393293}
   - component: {fileID: 2061393292}
+  - component: {fileID: 2061393294}
   m_Layer: 0
   m_Name: _GM
   m_TagString: Untagged
@@ -1088,6 +1084,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2061393294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2061393291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cec50d85e9ee06419edf1cba5ae64ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelStartDelay: 2
+  alertImg: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!1 &2092146662 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1015417964117034, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d,
