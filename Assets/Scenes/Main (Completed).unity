@@ -997,37 +997,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 212320538649424594, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 7b480b38f31f2a84897bd436ad15b6f5,
-        type: 3}
-    - target: {fileID: 212320538649424594, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d,
-        type: 2}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114810891193610894, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d,
-        type: 2}
-      propertyPath: speed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 114810891193610894, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d,
-        type: 2}
-      propertyPath: boostSpeedMultiplier
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114810891193610894, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d,
-        type: 2}
-      propertyPath: shootSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 60776409678821648, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d, type: 2}
   m_IsPrefabParent: 0
@@ -1575,18 +1544,3 @@ GameObject:
   m_PrefabParentObject: {fileID: 1015417964117034, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d,
     type: 2}
   m_PrefabInternal: {fileID: 1405518873}
---- !u!58 &2092146663
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2092146662}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3
