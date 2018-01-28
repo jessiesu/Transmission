@@ -6,7 +6,6 @@ using Pathfinding;
 [RequireComponent(typeof(Seeker))]
 public class BasicEnemy : MonoBehaviour {
 
-    public Transform target;
     public float updateRate = 2.0f;         // seconds before the path updates
     public Path path;
     public float speed = 300.0f;
@@ -16,6 +15,7 @@ public class BasicEnemy : MonoBehaviour {
     [HideInInspector]
     public bool pathEnded = false;
 
+    private Transform target;
     private Seeker seeker;
     private Rigidbody2D rb;
     private int currentWaypoint = 0;
@@ -24,6 +24,8 @@ public class BasicEnemy : MonoBehaviour {
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+
+        target = GameObject.FindGameObjectWithTag("Player").transform;
 
         if (!target)
         {
@@ -66,13 +68,12 @@ public class BasicEnemy : MonoBehaviour {
             return;
         }
 
-        // TODO: face player
         if (path == null)
         {
             return;
         }
 
-        if (currentWaypoint > path.vectorPath.Count)
+        if (currentWaypoint >= path.vectorPath.Count)
         {
             if (pathEnded)
             {
@@ -83,6 +84,11 @@ public class BasicEnemy : MonoBehaviour {
         }
 
         pathEnded = false;
+
+        Vector3 delta = (transform.position - target.position).normalized;
+
+        float rotZ = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotZ);
 
         Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
         dir *= speed * Time.fixedDeltaTime;
