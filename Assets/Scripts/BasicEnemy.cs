@@ -103,4 +103,13 @@ public class BasicEnemy : MonoBehaviour {
             return;
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Projectile"))
+        {
+            Destroy(gameObject);
+            Destroy(other.gameObject);
+        }
+    }
 }
