@@ -166,6 +166,7 @@ MonoBehaviour:
   speed: 500
   forceMode: 0
   nextWaypointDist: 3
+  scoreValue: 25
   pathEnded: 0
   bulletPrefab: {fileID: 152844, guid: 9c9fab2cab1257e4181631d6587a0375, type: 2}
   deathParticle: {fileID: 1373448477232228, guid: 1b00772c78f59524a8945a55b25832c6,
@@ -204,7 +205,7 @@ SpriteRenderer:
   m_SortingLayerID: 1542523087
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: 54a2f6bea2ecfe4459ac42b759b98213, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1fac6166bdc0bcc4294d4f3d3e083411, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
