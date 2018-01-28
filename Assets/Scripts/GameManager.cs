@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
     IEnumerator Fading()
     {
         anim.SetBool("Fade", true);
-        yield return new WaitUntil(() => frame >= 100);
+        yield return new WaitUntil(() => alertImg.color.a == 1);
     }
 
     void StartWave()
