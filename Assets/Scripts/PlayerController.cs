@@ -129,6 +129,7 @@ public class PlayerController : MonoBehaviour {
             if ((pso.objectPhase & gm.CurrentPhase) == 0)
             {
                 gameObject.SetActive(false);
+                gm.RespawnPlayer(gameObject, 1);
             }
         }
     }

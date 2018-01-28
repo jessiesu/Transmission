@@ -13,7 +13,6 @@ public class PhasedGameObject : MonoBehaviour {
         GameObject gmGo = GameObject.Find("_GM");
         gm = (GameManager)gmGo.GetComponent<GameManager>();
         this.PlayerPhaseSwitched(gm.CurrentPhase);
-        gm.RegisterPhasedObject(this);
     }
 
     public void PlayerPhaseSwitched (PhaseState playerPhase) {
