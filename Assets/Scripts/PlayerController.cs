@@ -32,7 +32,8 @@ public class PlayerController : MonoBehaviour {
     public float shootCooldown = 0.2f;
     public float phaseCooldown = 0.5f;
     public float shootSpeed = 20;
-    public GameObject shootPrefab;
+    public GameObject shootPrefabBlue;
+    public GameObject shootPrefabRed;
 
     private GameManager gm;
     private List<PlayerAction> moveset = new List<PlayerAction>();
@@ -60,10 +61,16 @@ public class PlayerController : MonoBehaviour {
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 bulletVector = (new Vector2(mousePos.x, mousePos.y) - rb2d.position).normalized;
-        GameObject projectile = Instantiate(shootPrefab);
-        Rigidbody2D projRb2d = (Rigidbody2D) projectile.GetComponent<Rigidbody2D>();
-        CircleCollider2D projCollider = (CircleCollider2D) this.GetComponent<CircleCollider2D>();
-        projRb2d.position = rb2d.position + (projCollider.radius * bulletVector);
+
+        GameObject projectile = null;
+        if (gm.CurrentPhase == PhaseState.Red)
+            projectile = Instantiate(shootPrefabRed);
+        else if(gm.CurrentPhase == PhaseState.Blue)
+            projectile = Instantiate(shootPrefabBlue);
+
+        Rigidbody2D projRb2d = projectile.GetComponent<Rigidbody2D>();
+        CircleCollider2D playerCollider = this.GetComponent<CircleCollider2D>();
+        projRb2d.position = rb2d.position + (playerCollider.radius * bulletVector);
         projRb2d.velocity = bulletVector * shootSpeed;
     }
 
