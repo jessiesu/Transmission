@@ -16,11 +16,21 @@ public class GameManager : MonoBehaviour {
     public Image alertImg;
     public Animator anim;
 
+    private int playerScore = 0;
+    private GameObject playerScoreText;
+
     private bool doingSetup;
 
     private PhaseState currentPhase = PhaseState.Red;
 
     public PhaseState CurrentPhase { get { return currentPhase; } }
+
+    // Use this for initialization
+    void Start() {
+        playerScoreText = GameObject.Find("Score");
+        ResetScore();
+        StartWave();
+    }
 
     IEnumerator Fading()
     {
@@ -49,11 +59,20 @@ public class GameManager : MonoBehaviour {
         
     }
 
-    // Use this for initialization
-    void Start() {
-        StartWave();
+    public void ResetScore()
+    {
+        playerScore = 0;
+        UpdateScore();
     }
 
+    public void UpdateScore(int change=0)
+    {
+        playerScore += change;
+        Text text = playerScoreText.GetComponent<Text>();
+        text.text = ("Score: " + playerScore);
+    }
+
+    // respawn player after a delay, destroy all "phased objects" in the scene
     public void RespawnPlayer(GameObject player, float delay)
     {
         StartCoroutine(Respawn(player, delay));
@@ -98,6 +117,7 @@ public class GameManager : MonoBehaviour {
             phasedObject.PlayerPhaseSwitched(phase);
     }
 
+    // get all the phased game objects behaviour scripts
     public List<PhasedGameObject> FindPhasedGameObjects()
     {
         List<GameObject> gameObjects = new List<GameObject>();
