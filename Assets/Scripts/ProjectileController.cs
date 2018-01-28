@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileController : PhasedGameObject {
 
-    private float lifetime = 10;
+    public float lifetime = 10;
     private float age = 0;
 
     new void Start()
