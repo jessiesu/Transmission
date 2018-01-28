@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour {
     private bool doingSetup;
 
     private PhaseState currentPhase = PhaseState.Red;
-    private List<PhasedGameObject> phasedObjectList = new List<PhasedGameObject>();
 
     public PhaseState CurrentPhase { get { return currentPhase; } }
 
@@ -55,6 +54,24 @@ public class GameManager : MonoBehaviour {
         StartWave();
     }
 
+    public void RespawnPlayer(GameObject player, float delay)
+    {
+        StartCoroutine(Respawn(player, delay));
+    }
+
+    IEnumerator Respawn(GameObject player, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        player.SetActive(true);
+        Rigidbody2D playerRb2d = player.GetComponent<Rigidbody2D>();
+        playerRb2d.velocity = new Vector2();
+        playerRb2d.position = new Vector2();
+
+        foreach(PhasedGameObject phasedObject in FindPhasedGameObjects())
+            Destroy(phasedObject.gameObject);
+    }
+
     // Update is called once per frame
     void Update() {
     }
@@ -77,20 +94,20 @@ public class GameManager : MonoBehaviour {
             Physics2D.IgnoreLayerCollision(layerDefault, layerEnemyBlue, true);
         }
 
-        List<PhasedGameObject> newList = new List<PhasedGameObject>();
-        foreach(PhasedGameObject phasedObject in phasedObjectList)
-        {
-            if (phasedObject != null)
-            {
-                phasedObject.PlayerPhaseSwitched(phase);
-                newList.Add(phasedObject);
-            }
-        }
-        phasedObjectList = newList;
+        foreach(PhasedGameObject phasedObject in FindPhasedGameObjects())
+            phasedObject.PlayerPhaseSwitched(phase);
     }
 
-    public void RegisterPhasedObject(PhasedGameObject phasedObject)
+    public List<PhasedGameObject> FindPhasedGameObjects()
     {
-        phasedObjectList.Add(phasedObject);
+        List<GameObject> gameObjects = new List<GameObject>();
+        gameObjects.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        gameObjects.AddRange(GameObject.FindGameObjectsWithTag("Projectile"));
+        gameObjects.AddRange(GameObject.FindGameObjectsWithTag("EnemyProjectile"));
+
+        List<PhasedGameObject> phasedObjects = new List<PhasedGameObject>();
+        foreach (GameObject go in gameObjects)
+            phasedObjects.Add(go.GetComponent<PhasedGameObject>());
+        return phasedObjects;
     }
 }
