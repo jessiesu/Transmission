@@ -21,6 +21,7 @@ public class BasicEnemy : PhasedGameObject {
     private int currentWaypoint = 0;
 
     public GameObject bulletPrefab;
+	public GameObject deathParticle;
 
     private float fireRate = 0.5f;
     private float timeToFire = 0;
@@ -128,7 +129,8 @@ public class BasicEnemy : PhasedGameObject {
             PhasedGameObject pso = other.GetComponent<PhasedGameObject>();
 
             if ((pso.objectPhase & objectPhase) == 0)
-            {
+			{
+				GameObject clone = Instantiate(deathParticle, transform.position, transform.rotation);
                 Destroy(gameObject);
                 Destroy(other.gameObject);
             }
