@@ -12,6 +12,8 @@ public class BasicEnemy : PhasedGameObject {
     public ForceMode2D forceMode;
     public float nextWaypointDist = 3.0f;   // Max distance from AI to a waypoint for it to continue to the next waypoint
 
+    public int scoreValue = 25;
+
     [HideInInspector]
     public bool pathEnded = false;
 
@@ -131,6 +133,7 @@ public class BasicEnemy : PhasedGameObject {
             {
                 Destroy(gameObject);
                 Destroy(other.gameObject);
+                gm.UpdateScore(scoreValue);
             }
         }
     }

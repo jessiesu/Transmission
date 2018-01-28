@@ -6,7 +6,7 @@ public class PhasedGameObject : MonoBehaviour {
 
     public PhaseState objectPhase = PhaseState.Red;
     public bool isPlayerProjectile = false;
-    private GameManager gm;
+    protected GameManager gm;
 
     public void Start()
     {
