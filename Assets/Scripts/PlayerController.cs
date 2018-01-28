@@ -22,10 +22,38 @@ internal class PlayerAction
     }
 }
 
+[System.Serializable]
+class PlayerStats
+{
+    private int maxLife;
+    private int life;
+    private PlayerController player;
+    private GameManager gm;
+
+    public PlayerStats(int maxLife, GameManager gameManager, PlayerController playerController)
+    {
+        this.maxLife = maxLife;
+        this.life = maxLife;
+        this.gm = gameManager;
+        this.player = playerController;
+    }
+
+    public void takeDamage(int damage)
+    {
+        life--;
+        if (life == 0)
+        {
+            player.gameObject.SetActive(false);
+            gm.RespawnPlayer(player.gameObject, 1);
+        }
+    }
+}
+
 public class PlayerController : MonoBehaviour {
 
     // Tunable parameters
-	public float speed = 10;
+    public int maxLife = 3;
+    public float speed = 10;
     public float boostCooldown = 6;
     public float boostSpeedMultiplier = 3;
     public float boostDuration = 3;
@@ -41,6 +69,7 @@ public class PlayerController : MonoBehaviour {
     private List<PlayerAction> moveset = new List<PlayerAction>();
     private float speedMultiplier = 1.0f;
 	private Rigidbody2D rb2d;		//Store a reference to the Rigidbody2D component required to use 2D Physics.
+    private PlayerStats playerStats;
 
 	void Start()
 	{
@@ -53,7 +82,9 @@ public class PlayerController : MonoBehaviour {
         GameObject gmGo = GameObject.Find("_GM");
         gm = gmGo.GetComponent<GameManager>();
         gm.ChangePhase(gm.CurrentPhase);
-	}
+
+        playerStats = new PlayerStats(maxLife, gm, this);
+    }
 
     void Boost()
     {
@@ -128,8 +159,7 @@ public class PlayerController : MonoBehaviour {
             PhasedGameObject pso = other.GetComponent<PhasedGameObject>();
             if ((pso.objectPhase & gm.CurrentPhase) == 0)
             {
-                gameObject.SetActive(false);
-                gm.RespawnPlayer(gameObject, 1);
+                playerStats.takeDamage(1);
             }
         }
     }
