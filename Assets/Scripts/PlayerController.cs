@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour {
     public float shootSpeed = 20;
     public GameObject shootPrefabBlue;
     public GameObject shootPrefabRed;
+    public Sprite spriteBlue;
+    public Sprite spriteRed;
 
     private GameManager gm;
     private List<PlayerAction> moveset = new List<PlayerAction>();
@@ -70,8 +72,8 @@ public class PlayerController : MonoBehaviour {
             projectile = Instantiate(shootPrefabBlue);
 
         Rigidbody2D projRb2d = projectile.GetComponent<Rigidbody2D>();
-        CircleCollider2D playerCollider = this.GetComponent<CircleCollider2D>();
-        projRb2d.position = rb2d.position + (playerCollider.radius * bulletVector);
+        Collider2D playerCollider = this.GetComponent<Collider2D>();
+        projRb2d.position = rb2d.position + (gameObject.transform.localScale.magnitude * bulletVector);
         projRb2d.velocity = bulletVector * shootSpeed;
     }
 
@@ -79,6 +81,12 @@ public class PlayerController : MonoBehaviour {
     {
         PhaseState newState = gm.CurrentPhase == PhaseState.Blue ? PhaseState.Red : PhaseState.Blue;
         gm.ChangePhase(newState);
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (gm.CurrentPhase == PhaseState.Red)
+            sr.sprite = spriteRed;
+        else if (gm.CurrentPhase == PhaseState.Blue)
+            sr.sprite = spriteBlue;
     }
 
 	//FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
