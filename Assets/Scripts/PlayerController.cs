@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour {
         moveset.Add(new PlayerAction(KeyCode.Space, phaseCooldown, PhaseSwitch));
 
         GameObject gmGo = GameObject.Find("_GM");
-        gm = (GameManager)gmGo.GetComponent<GameManager>();
+        gm = gmGo.GetComponent<GameManager>();
 	}
 
     void Boost()
