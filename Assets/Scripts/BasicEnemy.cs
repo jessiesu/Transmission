@@ -24,7 +24,7 @@ public class BasicEnemy : PhasedGameObject {
 
     private float fireRate = 0.5f;
     private float timeToFire = 0;
-    private float bulletSpeed = 20.0f;
+    private float bulletSpeed = 15.0f;
 
     private void Start()
     {

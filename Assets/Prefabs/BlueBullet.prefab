@@ -145,4 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d5b801a456b1344aee8a2abe70114d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectPhase: 1
+  isPlayerProjectile: 0
   lifetime: 5
