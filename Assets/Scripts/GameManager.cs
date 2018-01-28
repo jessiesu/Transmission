@@ -61,9 +61,21 @@ public class GameManager : MonoBehaviour {
 
     public void ChangePhase(PhaseState phase)
     {
-        if (phase == currentPhase)
-            return;
         currentPhase = phase;
+
+        int layerDefault = LayerMask.NameToLayer("Default");
+        int layerEnemyRed = LayerMask.NameToLayer("EnemyRed");
+        int layerEnemyBlue = LayerMask.NameToLayer("EnemyBlue");
+        if (phase == PhaseState.Red)
+        {
+            Physics2D.IgnoreLayerCollision(layerDefault, layerEnemyRed, true);
+            Physics2D.IgnoreLayerCollision(layerDefault, layerEnemyBlue, false);
+        }
+        else if (phase == PhaseState.Blue)
+        {
+            Physics2D.IgnoreLayerCollision(layerDefault, layerEnemyRed, false);
+            Physics2D.IgnoreLayerCollision(layerDefault, layerEnemyBlue, true);
+        }
 
         List<PhasedGameObject> newList = new List<PhasedGameObject>();
         foreach(PhasedGameObject phasedObject in phasedObjectList)

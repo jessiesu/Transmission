@@ -146,3 +146,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPhase: 2
+  isPlayerProjectile: 1

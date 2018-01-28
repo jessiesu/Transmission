@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour {
 
         GameObject gmGo = GameObject.Find("_GM");
         gm = gmGo.GetComponent<GameManager>();
+        gm.ChangePhase(gm.CurrentPhase);
 	}
 
     void Boost()
@@ -112,14 +113,15 @@ public class PlayerController : MonoBehaviour {
         rb2d.rotation = targetRotation;
 	}
 
-	//OnTriggerEnter2D is called whenever this object overlaps with a trigger collider.
-	void OnTriggerEnter2D(Collider2D other) 
-	{
-		//Check the provided Collider2D parameter other to see if it is tagged "PickUp", if it is...
-		if (other.gameObject.CompareTag ("PickUp")) 
-		{
-			//... then set the other object we just collided with to inactive.
-			other.gameObject.SetActive(false);
-		}
-	}
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            PhasedGameObject pso = other.GetComponent<PhasedGameObject>();
+            if ((pso.objectPhase & gm.CurrentPhase) == 0)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+    }
 }
