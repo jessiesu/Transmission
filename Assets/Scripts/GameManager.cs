@@ -25,11 +25,19 @@ public class GameManager : MonoBehaviour {
 
     public PhaseState CurrentPhase { get { return currentPhase; } }
 
+    PhaseMusic phaseMusic;
+
+    private void Awake()
+    {
+        phaseMusic = gameObject.GetComponent<PhaseMusic>();
+    }
+
     // Use this for initialization
     void Start() {
         playerScoreText = GameObject.Find("Score");
         ResetScore();
         StartWave();
+        phaseMusic.PlayRedTrack();
     }
 
     IEnumerator Fading()
@@ -106,11 +114,13 @@ public class GameManager : MonoBehaviour {
         {
             Physics2D.IgnoreLayerCollision(layerDefault, layerEnemyRed, true);
             Physics2D.IgnoreLayerCollision(layerDefault, layerEnemyBlue, false);
+            phaseMusic.PlayRedTrack();
         }
         else if (phase == PhaseState.Blue)
         {
             Physics2D.IgnoreLayerCollision(layerDefault, layerEnemyRed, false);
             Physics2D.IgnoreLayerCollision(layerDefault, layerEnemyBlue, true);
+            phaseMusic.PlayBlueTrack();
         }
 
         foreach(PhasedGameObject phasedObject in FindPhasedGameObjects())
