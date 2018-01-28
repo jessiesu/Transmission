@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 21237244}
   - component: {fileID: 5869192}
   - component: {fileID: 5025620}
+  - component: {fileID: 114573285476524120}
   m_Layer: 8
   m_Name: PlayerProjectile1
   m_TagString: Projectile
@@ -133,3 +134,14 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 152844}
   m_IsPrefabParent: 1
+--- !u!114 &114573285476524120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d5b801a456b1344aee8a2abe70114d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
