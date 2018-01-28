@@ -137,7 +137,6 @@ public class BasicEnemy : PhasedGameObject {
 
     private void Shoot(Vector3 direction)
     {
-        Debug.Log("Shooting");
         GameObject clone = Instantiate(bulletPrefab, transform.position, transform.rotation);
         Rigidbody2D cloneRb = clone.GetComponent<Rigidbody2D>();
         cloneRb.velocity = bulletSpeed * direction;
