@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour {
 
     private GameManager gm;
     private List<PlayerAction> moveset = new List<PlayerAction>();
-    private float speedMultiplier = 1.0f;
+    private Vector2 boostVector = new Vector2();
 	private Rigidbody2D rb2d;		//Store a reference to the Rigidbody2D component required to use 2D Physics.
 
 	void Start()
@@ -57,7 +57,10 @@ public class PlayerController : MonoBehaviour {
 
     void Boost()
     {
-        speedMultiplier = boostSpeedMultiplier;
+		float moveHorizontal = Input.GetAxis ("Horizontal");
+		float moveVertical = Input.GetAxis ("Vertical");
+		Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
+        boostVector = movement * boostSpeedMultiplier * speed;
     }
 
     void Shoot()
@@ -106,13 +109,13 @@ public class PlayerController : MonoBehaviour {
         }
 
         // make boost decay linearly over time
-        if (speedMultiplier > 1.0f)
-            speedMultiplier -= (boostSpeedMultiplier - 1.0f) * (Time.deltaTime / boostDuration);
+        if (boostVector.magnitude > 0)
+            boostVector -= boostVector * (boostSpeedMultiplier - 1.0f) * (Time.deltaTime / boostDuration);
 
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
 		Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
-		rb2d.velocity = movement * speed * speedMultiplier;
+		rb2d.velocity = movement * speed + boostVector;
 
         // rotate the player toward the mouse direction
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
