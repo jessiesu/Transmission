@@ -10,7 +10,7 @@ public class PhaseMusic : MonoBehaviour
 
     public float currentTime = 0;
 
-    private void Start()
+    private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
