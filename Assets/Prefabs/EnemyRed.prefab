@@ -23,7 +23,8 @@ GameObject:
   - component: {fileID: 114947120342887492}
   - component: {fileID: 114165375123421680}
   - component: {fileID: 58659679272588140}
-  m_Layer: 0
+  - component: {fileID: 58740787775078212}
+  m_Layer: 10
   m_Name: EnemyRed
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -39,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4264667910642586}
   - component: {fileID: 212665769276747986}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,12 +103,27 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.9
+--- !u!58 &58740787775078212
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1581206695424598}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.8
 --- !u!114 &114165375123421680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,6 +160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a8fb21d8dedac41a31fc306a045102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectPhase: 2
+  isPlayerProjectile: 0
   updateRate: 2
   speed: 500
   forceMode: 0

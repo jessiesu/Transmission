@@ -125,8 +125,13 @@ public class BasicEnemy : PhasedGameObject {
     {
         if (other.gameObject.CompareTag("Projectile"))
         {
-            Destroy(gameObject);
-            Destroy(other.gameObject);
+            PhasedGameObject pso = other.GetComponent<PhasedGameObject>();
+
+            if ((pso.objectPhase & objectPhase) == 0)
+            {
+                Destroy(gameObject);
+                Destroy(other.gameObject);
+            }
         }
     }
 
