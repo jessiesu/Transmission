@@ -20,7 +20,13 @@ public class BasicEnemy : PhasedGameObject {
     private Rigidbody2D rb;
     private int currentWaypoint = 0;
 
-    new void Start()
+    public GameObject bulletPrefab;
+
+    private float fireRate = 2.0f;
+    private float timeToFire = 0;
+    private float bulletSpeed = 10.0f;
+
+    private void Start()
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
@@ -41,6 +47,21 @@ public class BasicEnemy : PhasedGameObject {
         base.Start();
     }
 
+    private void Update()
+    {
+        // shoot player
+        Vector3 delta = (target.position - transform.position).normalized;
+
+        float rotZ = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotZ);
+
+        if (Time.time > timeToFire)
+        {
+            timeToFire = Time.time + (1 / fireRate);
+            Shoot(delta);
+        }
+    }
+
     private IEnumerator UpdatePath()
     {
         if (!target)
@@ -55,7 +76,6 @@ public class BasicEnemy : PhasedGameObject {
 
     private void OnPathComplete(Path p)
     {
-        Debug.Log("Path found");
         if (!p.error)
         {
             path = p;
@@ -87,11 +107,6 @@ public class BasicEnemy : PhasedGameObject {
 
         pathEnded = false;
 
-        Vector3 delta = (transform.position - target.position).normalized;
-
-        float rotZ = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotZ);
-
         Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
         dir *= speed * Time.fixedDeltaTime;
 
@@ -113,5 +128,13 @@ public class BasicEnemy : PhasedGameObject {
             Destroy(gameObject);
             Destroy(other.gameObject);
         }
+    }
+
+    private void Shoot(Vector3 direction)
+    {
+        Debug.Log("Shooting");
+        GameObject clone = Instantiate(bulletPrefab, transform.position, transform.rotation);
+        Rigidbody2D cloneRb = clone.GetComponent<Rigidbody2D>();
+        cloneRb.velocity = bulletSpeed * direction;
     }
 }

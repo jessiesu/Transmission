@@ -150,6 +150,7 @@ MonoBehaviour:
   forceMode: 0
   nextWaypointDist: 3
   pathEnded: 0
+  bulletPrefab: {fileID: 152844, guid: 9c9fab2cab1257e4181631d6587a0375, type: 2}
 --- !u!212 &212665769276747986
 SpriteRenderer:
   m_ObjectHideFlags: 1
