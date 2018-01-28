@@ -12,6 +12,8 @@ public class BasicEnemy : PhasedGameObject {
     public ForceMode2D forceMode;
     public float nextWaypointDist = 3.0f;   // Max distance from AI to a waypoint for it to continue to the next waypoint
 
+    public int scoreValue = 25;
+
     [HideInInspector]
     public bool pathEnded = false;
 
@@ -21,6 +23,7 @@ public class BasicEnemy : PhasedGameObject {
     private int currentWaypoint = 0;
 
     public GameObject bulletPrefab;
+	public GameObject deathParticle;
 
     private float fireRate = 0.5f;
     private float timeToFire = 0;
@@ -128,9 +131,11 @@ public class BasicEnemy : PhasedGameObject {
             PhasedGameObject pso = other.GetComponent<PhasedGameObject>();
 
             if ((pso.objectPhase & objectPhase) == 0)
-            {
+			{
+				GameObject clone = Instantiate(deathParticle, transform.position, transform.rotation);
                 Destroy(gameObject);
                 Destroy(other.gameObject);
+                gm.UpdateScore(scoreValue);
             }
         }
     }

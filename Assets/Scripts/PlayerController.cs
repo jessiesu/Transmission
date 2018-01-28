@@ -67,9 +67,15 @@ public class PlayerController : MonoBehaviour {
 
     private GameManager gm;
     private List<PlayerAction> moveset = new List<PlayerAction>();
-    private float speedMultiplier = 1.0f;
 	private Rigidbody2D rb2d;		//Store a reference to the Rigidbody2D component required to use 2D Physics.
     private PlayerStats playerStats;
+
+    private Vector2 boostVector = new Vector2();
+    private float boostRemaining = 0.0f;
+    private bool shielded = false; //damage immunity (activated by boost)
+    private SpriteRenderer shieldSprite; //damage immunity (activated by boost)
+    private Color redShieldColor = new Color(1.0f, 0.5f, 0.5f);
+    private Color blueShieldColor = new Color(0.5f, 0.5f, 1.0f);
 
 	void Start()
 	{
@@ -84,11 +90,22 @@ public class PlayerController : MonoBehaviour {
         gm.ChangePhase(gm.CurrentPhase);
 
         playerStats = new PlayerStats(maxLife, gm, this);
+
+        GameObject shieldGO = GameObject.Find("PlayerShield");
+        shieldSprite = shieldGO.GetComponent<SpriteRenderer>();
+	}
+
+    Vector2 GetMouseVector()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return (new Vector2(mousePos.x, mousePos.y) - rb2d.position).normalized;
     }
 
     void Boost()
     {
-        speedMultiplier = boostSpeedMultiplier;
+        boostVector = GetMouseVector() * boostSpeedMultiplier * speed;
+        boostRemaining = boostDuration;
+        shielded = true;
     }
 
     void Shoot()
@@ -137,17 +154,37 @@ public class PlayerController : MonoBehaviour {
         }
 
         // make boost decay linearly over time
-        if (speedMultiplier > 1.0f)
-            speedMultiplier -= (boostSpeedMultiplier - 1.0f) * (Time.deltaTime / boostDuration);
+        if (boostRemaining > 0)
+        {
+            boostRemaining -= Time.deltaTime;
+            Color tmp = shieldSprite.color;
+            Color shieldColor = redShieldColor;
+            if (gm.CurrentPhase == PhaseState.Blue)
+                shieldColor = blueShieldColor;
+            tmp.r = shieldColor.r;
+            tmp.g = shieldColor.g;
+            tmp.b = shieldColor.b;
+            tmp.a = (boostRemaining / boostDuration) * 0.4f;
+            shieldSprite.color = tmp;
+            boostVector -= boostVector * (boostSpeedMultiplier - 1.0f) * (Time.deltaTime / boostDuration);
+        }
+        else
+        {
+            Color tmp = shieldSprite.color;
+            tmp.a = 0;
+            shieldSprite.color = tmp;
+            boostVector.x = 0;
+            boostVector.y = 0;
+            shielded = false;
+        }
 
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
 		Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
-		rb2d.velocity = movement * speed * speedMultiplier;
+		rb2d.velocity = movement * speed + boostVector;
 
         // rotate the player toward the mouse direction
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mouseVector = (new Vector2(mousePos.x, mousePos.y) - rb2d.position).normalized;
+        Vector2 mouseVector = GetMouseVector();
         float targetRotation = (Mathf.Atan2(mouseVector.y, mouseVector.x) * Mathf.Rad2Deg - 90) % 360;
         rb2d.rotation = targetRotation;
 	}
@@ -157,7 +194,7 @@ public class PlayerController : MonoBehaviour {
         if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("EnemyProjectile"))
         {
             PhasedGameObject pso = other.GetComponent<PhasedGameObject>();
-            if ((pso.objectPhase & gm.CurrentPhase) == 0)
+            if ((pso.objectPhase & gm.CurrentPhase) == 0 && !shielded)
             {
                 playerStats.takeDamage(1);
             }
