@@ -25,14 +25,17 @@ internal class PlayerAction
 public class PlayerController : MonoBehaviour {
 
     // Tunable parameters
-	public float speed;
-    public float boostCooldown;
-    public float boostSpeedMultiplier;
-    public float boostDuration;
-    public float shootCooldown;
-    public float shootSpeed;
-    public GameObject shootPrefab;
+	public float speed = 10;
+    public float boostCooldown = 6;
+    public float boostSpeedMultiplier = 3;
+    public float boostDuration = 3;
+    public float shootCooldown = 0.2f;
+    public float phaseCooldown = 0.5f;
+    public float shootSpeed = 20;
+    public GameObject shootPrefabBlue;
+    public GameObject shootPrefabRed;
 
+    private GameManager gm;
     private List<PlayerAction> moveset = new List<PlayerAction>();
     private float speedMultiplier = 1.0f;
 	private Rigidbody2D rb2d;		//Store a reference to the Rigidbody2D component required to use 2D Physics.
@@ -43,6 +46,10 @@ public class PlayerController : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D> ();
         moveset.Add(new PlayerAction(KeyCode.LeftShift, boostCooldown, Boost));
         moveset.Add(new PlayerAction(KeyCode.Mouse0, shootCooldown, Shoot));
+        moveset.Add(new PlayerAction(KeyCode.Space, phaseCooldown, PhaseSwitch));
+
+        GameObject gmGo = GameObject.Find("_GM");
+        gm = gmGo.GetComponent<GameManager>();
 	}
 
     void Boost()
@@ -54,11 +61,23 @@ public class PlayerController : MonoBehaviour {
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 bulletVector = (new Vector2(mousePos.x, mousePos.y) - rb2d.position).normalized;
-        GameObject projectile = Instantiate(shootPrefab);
-        Rigidbody2D projRb2d = (Rigidbody2D) projectile.GetComponent<Rigidbody2D>();
-        CircleCollider2D projCollider = (CircleCollider2D) this.GetComponent<CircleCollider2D>();
-        projRb2d.position = rb2d.position + (projCollider.radius * bulletVector);
+
+        GameObject projectile = null;
+        if (gm.CurrentPhase == PhaseState.Red)
+            projectile = Instantiate(shootPrefabRed);
+        else if(gm.CurrentPhase == PhaseState.Blue)
+            projectile = Instantiate(shootPrefabBlue);
+
+        Rigidbody2D projRb2d = projectile.GetComponent<Rigidbody2D>();
+        CircleCollider2D playerCollider = this.GetComponent<CircleCollider2D>();
+        projRb2d.position = rb2d.position + (playerCollider.radius * bulletVector);
         projRb2d.velocity = bulletVector * shootSpeed;
+    }
+
+    void PhaseSwitch()
+    {
+        PhaseState newState = gm.CurrentPhase == PhaseState.Blue ? PhaseState.Red : PhaseState.Blue;
+        gm.ChangePhase(newState);
     }
 
 	//FixedUpdate is called at a fixed interval and is independent of frame rate. Put physics code here.
