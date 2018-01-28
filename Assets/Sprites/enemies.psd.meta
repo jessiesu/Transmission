@@ -1,12 +1,13 @@
 fileFormatVersion: 2
 guid: 54a2f6bea2ecfe4459ac42b759b98213
-timeCreated: 1517081136
+timeCreated: 1517114854
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: enemies_0
+    21300000: BlueBullet
     21300002: EnemyBlue
     21300004: EnemyRed
+    21300006: RedBullet
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -107,7 +108,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 265
         width: 269
         height: 273
       alignment: 0
@@ -121,11 +122,39 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 269
-        y: 0
+        y: 265
         width: 269
         height: 273
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BlueBullet
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 133
+        width: 125
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: RedBullet
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 137
+        width: 125
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

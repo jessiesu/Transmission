@@ -144,12 +144,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a8fb21d8dedac41a31fc306a045102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 4130389284375080, guid: 3a7bf7532d179fa4ca1cb7b91a9a4b1d, type: 2}
   updateRate: 2
   speed: 500
   forceMode: 0
   nextWaypointDist: 3
   pathEnded: 0
+  bulletPrefab: {fileID: 152844, guid: 7462631c7a10ebf4a8b944c385d92a82, type: 2}
 --- !u!212 &212665769276747986
 SpriteRenderer:
   m_ObjectHideFlags: 1
