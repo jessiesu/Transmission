@@ -26,7 +26,9 @@ public class GameManager : MonoBehaviour {
     IEnumerator Fading()
     {
         anim.SetBool("Fade", true);
-        yield return new WaitUntil(() => alertImg.color.a == 1);
+        yield return new WaitForSeconds(5);
+        GameObject.Find("alertText").SetActive(false);
+        GameObject.Find("waveText").SetActive(false);
     }
 
     void StartWave()
@@ -35,8 +37,6 @@ public class GameManager : MonoBehaviour {
         GameObject.Find("waveText").SetActive(true);
         doingSetup = true;
         StartCoroutine(Fading());
-        //GameObject.Find("alertText").SetActive(false);
-        //GameObject.Find("waveText").SetActive(false);
     }
 
     private void HideAlertImage()
