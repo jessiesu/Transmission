@@ -64,12 +64,15 @@ public class PlayerController : MonoBehaviour {
         shieldSprite = shieldGO.GetComponent<SpriteRenderer>();
 	}
 
+    Vector2 GetMouseVector()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return (new Vector2(mousePos.x, mousePos.y) - rb2d.position).normalized;
+    }
+
     void Boost()
     {
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis ("Vertical");
-		Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
-        boostVector = movement * boostSpeedMultiplier * speed;
+        boostVector = GetMouseVector() * boostSpeedMultiplier * speed;
         boostRemaining = boostDuration;
         shielded = true;
     }
@@ -150,8 +153,7 @@ public class PlayerController : MonoBehaviour {
 		rb2d.velocity = movement * speed + boostVector;
 
         // rotate the player toward the mouse direction
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 mouseVector = (new Vector2(mousePos.x, mousePos.y) - rb2d.position).normalized;
+        Vector2 mouseVector = GetMouseVector();
         float targetRotation = (Mathf.Atan2(mouseVector.y, mouseVector.x) * Mathf.Rad2Deg - 90) % 360;
         rb2d.rotation = targetRotation;
 	}
