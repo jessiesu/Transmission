@@ -9,6 +9,8 @@ public class BasicEnemy : PhasedGameObject {
     public float updateRate = 2.0f;         // seconds before the path updates
     public Path path;
     public float speed = 300.0f;
+    public float speedPhaseMaxMultiplier = 20.0f;
+    public float speedPhaseMultiplierPerSecond = 0.5f;
     public ForceMode2D forceMode;
     public float nextWaypointDist = 3.0f;   // Max distance from AI to a waypoint for it to continue to the next waypoint
 
@@ -20,6 +22,7 @@ public class BasicEnemy : PhasedGameObject {
     [HideInInspector]
     public bool pathEnded = false;
 
+    public float speedMultiplier = 1;
     private Transform target;
     private Seeker seeker;
     private Rigidbody2D rb;
@@ -120,8 +123,18 @@ public class BasicEnemy : PhasedGameObject {
 
         pathEnded = false;
 
+        if ((gm.CurrentPhase & objectPhase) == 0)
+        {
+            speedMultiplier += speedPhaseMultiplierPerSecond * Time.deltaTime;
+            speedMultiplier = Mathf.Min(speedMultiplier, speedPhaseMaxMultiplier);
+        }
+        else
+        {
+            speedMultiplier = 1.0f;
+        }
+
         Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-        dir *= speed * Time.fixedDeltaTime;
+        dir *= speed * Time.fixedDeltaTime * speedMultiplier;
 
         rb.AddForce(dir, forceMode);
 
@@ -155,7 +168,7 @@ public class BasicEnemy : PhasedGameObject {
     {
         GameObject clone = Instantiate(bulletPrefab, transform.position, transform.rotation);
         Rigidbody2D cloneRb = clone.GetComponent<Rigidbody2D>();
-        cloneRb.velocity = bulletSpeed * direction;
+        cloneRb.velocity = bulletSpeed * direction * speedMultiplier;
         audioSourceShoot.Play();
     }
 }
