@@ -41,10 +41,15 @@ class PlayerStats
     public void takeDamage(int damage)
     {
         life--;
+        gm.UpdateLife(life);
+        player.gameObject.SetActive(false);
+        gm.RespawnPlayer(player.gameObject, 1);
+
         if (life == 0)
         {
-            player.gameObject.SetActive(false);
-            gm.RespawnPlayer(player.gameObject, 1);
+            life = maxLife;
+            gm.UpdateLife(maxLife);
+            // TODO: Game over
         }
     }
 }
@@ -98,6 +103,7 @@ public class PlayerController : MonoBehaviour {
         GameObject gmGo = GameObject.Find("_GM");
         gm = gmGo.GetComponent<GameManager>();
         gm.ChangePhase(gm.CurrentPhase);
+        gm.SetLife(maxLife);
 
         playerStats = new PlayerStats(maxLife, gm, this);
 
@@ -212,13 +218,10 @@ public class PlayerController : MonoBehaviour {
             PhasedGameObject pso = other.GetComponent<PhasedGameObject>();
             if ((pso.objectPhase & gm.CurrentPhase) == 0 && !shielded)
             {
-<<<<<<< HEAD
                 playerStats.takeDamage(1);
-=======
                 audioSourceDeath.Play();
                 gameObject.SetActive(false);
                 gm.RespawnPlayer(gameObject, 1);
->>>>>>> master
             }
         }
     }

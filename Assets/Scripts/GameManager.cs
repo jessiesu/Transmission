@@ -26,10 +26,12 @@ public class GameManager : MonoBehaviour {
     public PhaseState CurrentPhase { get { return currentPhase; } }
 
     PhaseMusic phaseMusic;
+    HUDPlayerLife lifeHUD;
 
     private void Awake()
     {
         phaseMusic = gameObject.GetComponent<PhaseMusic>();
+        lifeHUD = GameObject.Find("HUD").GetComponent<HUDPlayerLife>();
     }
 
     // Use this for initialization
@@ -78,6 +80,16 @@ public class GameManager : MonoBehaviour {
         playerScore += change;
         Text text = playerScoreText.GetComponent<Text>();
         text.text = ("Score: " + playerScore);
+    }
+
+    public void SetLife(int life)
+    {
+        lifeHUD.SetLife(life);
+    }
+
+    public void UpdateLife(int life)
+    {
+        lifeHUD.updateLife(life);
     }
 
     // respawn player after a delay, destroy all "phased objects" in the scene
