@@ -24,11 +24,14 @@ public class WaveSpawner : MonoBehaviour {
     private int nextWave = 0;
     public float waveCooldown = 5.0f;
     private float waveCountdown = 0;
+    private float minPlayerDistance = 5.0f;
 
     public Transform[] spawnPoints;
 
     private SpawnState state = SpawnState.COUNTING;
     private float enemyFindCountdown = 1.0f;
+
+    private Rigidbody2D playerRb2d;
 
     private void Start()
     {
@@ -42,6 +45,8 @@ public class WaveSpawner : MonoBehaviour {
         }
 
         waveCountdown = waveCooldown;
+
+        playerRb2d = GameObject.Find("Player").GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -103,8 +108,19 @@ public class WaveSpawner : MonoBehaviour {
 
     void SpawnEnemy(Transform enemy)
     {
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
+        List<Transform> validSpawnPoints = new List<Transform>();
+        foreach (Transform sp in spawnPoints)
+        {
+            Vector2 spawnLocation2D = new Vector2(sp.position.x, sp.position.y);
+            if ((spawnLocation2D - playerRb2d.position).magnitude > minPlayerDistance)
+                validSpawnPoints.Add(sp);
+        }
+
+        if (validSpawnPoints.Count > 0)
+        {
+            Transform spawnPoint = validSpawnPoints[Random.Range(0, validSpawnPoints.Count)];
+            Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
+        }
     }
 
     void WaveCompleted()

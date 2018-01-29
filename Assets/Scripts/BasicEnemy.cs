@@ -9,14 +9,20 @@ public class BasicEnemy : PhasedGameObject {
     public float updateRate = 2.0f;         // seconds before the path updates
     public Path path;
     public float speed = 300.0f;
+    public float speedPhaseMaxMultiplier = 20.0f;
+    public float speedPhaseMultiplierPerSecond = 0.5f;
     public ForceMode2D forceMode;
     public float nextWaypointDist = 3.0f;   // Max distance from AI to a waypoint for it to continue to the next waypoint
 
     public int scoreValue = 25;
 
+    public AudioClip shootSound;
+    public AudioClip deathSound;
+
     [HideInInspector]
     public bool pathEnded = false;
 
+    public float speedMultiplier = 1;
     private Transform target;
     private Seeker seeker;
     private Rigidbody2D rb;
@@ -27,7 +33,9 @@ public class BasicEnemy : PhasedGameObject {
 
     private float fireRate = 0.5f;
     private float timeToFire = 0;
-    private float bulletSpeed = 15.0f;
+    private float bulletSpeed = 30.0f;
+    private AudioSource audioSourceShoot;
+    private AudioSource audioSourceDeath;
 
     private void Start()
     {
@@ -44,6 +52,11 @@ public class BasicEnemy : PhasedGameObject {
 
         // start nenw path to the target and return the result to OnPathComplete
         seeker.StartPath(transform.position, target.position, OnPathComplete);
+
+        audioSourceShoot = GameObject.Find("SoundEffectsEnemyShoot").GetComponent<AudioSource>();
+        audioSourceShoot.clip = shootSound;
+        audioSourceDeath = GameObject.Find("SoundEffectsEnemyDeath").GetComponent<AudioSource>();
+        audioSourceDeath.clip = deathSound;
 
         StartCoroutine(UpdatePath());
         // call base "Start" function (PhasedGameObject)
@@ -110,8 +123,18 @@ public class BasicEnemy : PhasedGameObject {
 
         pathEnded = false;
 
+        if ((gm.CurrentPhase & objectPhase) == 0)
+        {
+            speedMultiplier += speedPhaseMultiplierPerSecond * Time.deltaTime;
+            speedMultiplier = Mathf.Min(speedMultiplier, speedPhaseMaxMultiplier);
+        }
+        else
+        {
+            speedMultiplier = 1.0f;
+        }
+
         Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-        dir *= speed * Time.fixedDeltaTime;
+        dir *= speed * Time.fixedDeltaTime * speedMultiplier;
 
         rb.AddForce(dir, forceMode);
 
@@ -136,6 +159,7 @@ public class BasicEnemy : PhasedGameObject {
                 Destroy(gameObject);
                 Destroy(other.gameObject);
                 gm.UpdateScore(scoreValue);
+                audioSourceDeath.Play();
             }
         }
     }
@@ -144,6 +168,7 @@ public class BasicEnemy : PhasedGameObject {
     {
         GameObject clone = Instantiate(bulletPrefab, transform.position, transform.rotation);
         Rigidbody2D cloneRb = clone.GetComponent<Rigidbody2D>();
-        cloneRb.velocity = bulletSpeed * direction;
+        cloneRb.velocity = bulletSpeed * direction * speedMultiplier;
+        audioSourceShoot.Play();
     }
 }

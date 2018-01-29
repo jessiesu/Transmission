@@ -108,7 +108,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.9
+  m_Radius: 1.4
 --- !u!58 &58740787775078212
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -123,7 +123,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 1.3
 --- !u!114 &114165375123421680
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -167,6 +167,8 @@ MonoBehaviour:
   forceMode: 0
   nextWaypointDist: 3
   scoreValue: 25
+  shootSound: {fileID: 8300000, guid: 6094455851b4bb24b88948936ad55cb4, type: 3}
+  deathSound: {fileID: 8300000, guid: f1e58777b5b3888499523dbed2870010, type: 3}
   pathEnded: 0
   bulletPrefab: {fileID: 152844, guid: 7462631c7a10ebf4a8b944c385d92a82, type: 2}
   deathParticle: {fileID: 1972380500365224, guid: 35c3d30f73a83d84e99d4b5f29e115ea,
