@@ -96,15 +96,15 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator Respawn(GameObject player, float delay)
     {
+        foreach(PhasedGameObject phasedObject in FindPhasedGameObjects())
+            Destroy(phasedObject.gameObject);
+
         yield return new WaitForSeconds(delay);
 
         player.SetActive(true);
         Rigidbody2D playerRb2d = player.GetComponent<Rigidbody2D>();
         playerRb2d.velocity = new Vector2();
         playerRb2d.position = new Vector2();
-
-        foreach(PhasedGameObject phasedObject in FindPhasedGameObjects())
-            Destroy(phasedObject.gameObject);
     }
 
     // Update is called once per frame

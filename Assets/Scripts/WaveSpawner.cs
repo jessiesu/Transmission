@@ -32,6 +32,7 @@ public class WaveSpawner : MonoBehaviour {
     private SpawnState state = SpawnState.COUNTING;
     private float enemyFindCountdown = 1.0f;
 
+    private GameObject playerObject;
     private Rigidbody2D playerRb2d;
     private GameManager gm;
 
@@ -47,7 +48,8 @@ public class WaveSpawner : MonoBehaviour {
         }
          waveCountDown = waveCooldown;
 
-        playerRb2d = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+        playerObject = GameObject.Find("Player");
+        playerRb2d = playerObject.GetComponent<Rigidbody2D>();
         GameObject gmGo = GameObject.Find("_GM");
         gm = (GameManager)gmGo.GetComponent<GameManager>();
     }
@@ -106,6 +108,9 @@ public class WaveSpawner : MonoBehaviour {
         // spawn
         for(int i = 0; i< wave.count; i++)
         {
+            while (!playerObject.activeSelf)
+                yield return new WaitForSeconds(1.0f);
+
             SpawnEnemy(waves[nextWave].enemyTypes[Random.Range(0, waves[nextWave].enemyTypes.Length)]);
             yield return new WaitForSeconds(1.0f / wave.rate);
         }
@@ -135,7 +140,10 @@ public class WaveSpawner : MonoBehaviour {
     {
         Debug.Log("Wave completed");
         state = SpawnState.COUNTING;
-        nextWave++;
+
+        if (playerObject.activeSelf)
+            nextWave++;
+
         if (nextWave >= waves.Length)
         {
             // game complete? currently loops
