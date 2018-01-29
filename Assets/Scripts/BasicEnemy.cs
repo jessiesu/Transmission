@@ -168,7 +168,7 @@ public class BasicEnemy : PhasedGameObject {
     {
         GameObject clone = Instantiate(bulletPrefab, transform.position, transform.rotation);
         Rigidbody2D cloneRb = clone.GetComponent<Rigidbody2D>();
-        cloneRb.velocity = bulletSpeed * direction * speedMultiplier;
+        cloneRb.velocity = bulletSpeed * direction * Mathf.Min((speedMultiplier/2),1);
         audioSourceShoot.Play();
     }
 }

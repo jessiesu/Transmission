@@ -126,7 +126,6 @@ public class WaveSpawner : MonoBehaviour {
     void WaveCompleted()
     {
         Debug.Log("Wave completed");
-
         state = SpawnState.COUNTING;
         waveCountdown = waveCooldown;
         nextWave++;
