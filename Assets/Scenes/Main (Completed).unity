@@ -203,7 +203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &212820811
 Transform:
   m_ObjectHideFlags: 0
@@ -278,7 +278,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 212820810}
   serializedVersion: 5
-  lengthInSec: 5
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 0
   looping: 1
@@ -331,14 +331,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2044773394
+  randomSeed: -792330533
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1000
+      scalar: 5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -379,7 +379,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -483,7 +483,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -891,7 +891,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 100
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -977,22 +977,22 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 1
+      scalar: 5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0.432433
-          inSlope: 0
-          outSlope: 0
+          value: 0.027026355
+          inSlope: 1.2194644
+          outSlope: 1.2194644
           tangentMode: 0
         - serializedVersion: 2
           time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 1
+          value: 0.6486492
+          inSlope: 0.78170925
+          outSlope: 0.78170925
           tangentMode: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1250,7 +1250,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 8288
+        atime1: 27949
         atime2: 0
         atime3: 0
         atime4: 0
@@ -1513,20 +1513,26 @@ ParticleSystem:
     speedModifier:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 1
+      scalar: 60
       minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0.2702713
-          inSlope: 0
-          outSlope: 0
+          value: 0.1891923
+          inSlope: 0.9238114
+          outSlope: 0.9238114
           tangentMode: 0
         - serializedVersion: 2
-          time: 1
-          value: 0.78378487
+          time: 0.37942082
+          value: 0.68284017
+          inSlope: 0.80406666
+          outSlope: 0.80406666
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 0.99468994
+          value: 0.86486727
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -3687,7 +3693,7 @@ SpriteRenderer:
   m_SortingLayerID: 389218567
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f2b410fc330e977459b3bbb2100e9cb7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 13c634090206a414e96795f381fd07ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3726,7 +3732,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 31.79, y: 31.640001}
+    oldSize: {x: 28.26, y: 28.130001}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3751,7 +3757,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 31.79, y: 31.640001}
+    oldSize: {x: 28.26, y: 28.130001}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3776,7 +3782,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 31.79, y: 31.640001}
+    oldSize: {x: 28.26, y: 28.130001}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3801,7 +3807,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 31.79, y: 31.640001}
+    oldSize: {x: 28.26, y: 28.130001}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -5162,7 +5168,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.1254902, g: 0.1254902, b: 0.1254902, a: 0.019607844}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

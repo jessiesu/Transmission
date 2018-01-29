@@ -30,7 +30,7 @@ public class BasicEnemy : PhasedGameObject {
 
     private float fireRate = 0.5f;
     private float timeToFire = 0;
-    private float bulletSpeed = 15.0f;
+    private float bulletSpeed = 30.0f;
     private AudioSource audioSourceShoot;
     private AudioSource audioSourceDeath;
 
