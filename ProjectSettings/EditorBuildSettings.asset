@@ -5,6 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Completed/Scenes/Main (Completed).unity
+  - enabled: 0
+    path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 5b6b1fe94a376f14f9ea50e9f5ca8651
+  - enabled: 1
+    path: Assets/Scenes/ParticlePlayGround.unity
+    guid: 20157325ba2437f49beb1c5b4f1119ac
+  - enabled: 1
+    path: Assets/Scenes/Main (Completed).unity
+    guid: 8fef1c5ea5fe2e845a387006d3eed277
