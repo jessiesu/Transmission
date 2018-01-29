@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour {
     private int playerScore = 0;
     private GameObject playerScoreText;
 
+    private GameObject alertText;
+    private GameObject waveText;
     private bool doingSetup;
 
     private PhaseState currentPhase = PhaseState.Red;
@@ -35,8 +37,11 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Start() {
         playerScoreText = GameObject.Find("Score");
+        alertText = GameObject.Find("alertText");
+        waveText = GameObject.Find("waveText");
+
         ResetScore();
-        StartWave();
+        StartWave(1);
         phaseMusic.PlayRedTrack();
     }
 
@@ -44,14 +49,17 @@ public class GameManager : MonoBehaviour {
     {
         anim.SetBool("Fade", true);
         yield return new WaitForSeconds(5);
-        GameObject.Find("alertText").SetActive(false);
-        GameObject.Find("waveText").SetActive(false);
+        alertText.SetActive(false);
+        waveText.SetActive(false);
     }
 
-    void StartWave()
+    public void StartWave(int waveNumber)
     {
-        GameObject.Find("alertText").SetActive(true);
-        GameObject.Find("waveText").SetActive(true);
+        Text waveTextText = waveText.GetComponent<Text>();
+
+        waveTextText.text = "INCOMING WAVE " + waveNumber;
+        alertText.SetActive(true);
+        waveText.SetActive(true);
         doingSetup = true;
         StartCoroutine(Fading());
     }
@@ -88,15 +96,15 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator Respawn(GameObject player, float delay)
     {
+        foreach(PhasedGameObject phasedObject in FindPhasedGameObjects())
+            Destroy(phasedObject.gameObject);
+
         yield return new WaitForSeconds(delay);
 
         player.SetActive(true);
         Rigidbody2D playerRb2d = player.GetComponent<Rigidbody2D>();
         playerRb2d.velocity = new Vector2();
         playerRb2d.position = new Vector2();
-
-        foreach(PhasedGameObject phasedObject in FindPhasedGameObjects())
-            Destroy(phasedObject.gameObject);
     }
 
     // Update is called once per frame

@@ -23,7 +23,8 @@ public class WaveSpawner : MonoBehaviour {
     public Wave[] waves;
     private int nextWave = 0;
     public float waveCooldown = 5.0f;
-    private float waveCountdown = 0;
+
+    private float waveCountDown;
     private float minPlayerDistance = 5.0f;
 
     public Transform[] spawnPoints;
@@ -31,7 +32,9 @@ public class WaveSpawner : MonoBehaviour {
     private SpawnState state = SpawnState.COUNTING;
     private float enemyFindCountdown = 1.0f;
 
+    private GameObject playerObject;
     private Rigidbody2D playerRb2d;
+    private GameManager gm;
 
     private void Start()
     {
@@ -43,10 +46,12 @@ public class WaveSpawner : MonoBehaviour {
         {
             Debug.LogError("Cannot find waves");
         }
+         waveCountDown = waveCooldown;
 
-        waveCountdown = waveCooldown;
-
-        playerRb2d = GameObject.Find("Player").GetComponent<Rigidbody2D>();
+        playerObject = GameObject.Find("Player");
+        playerRb2d = playerObject.GetComponent<Rigidbody2D>();
+        GameObject gmGo = GameObject.Find("_GM");
+        gm = (GameManager)gmGo.GetComponent<GameManager>();
     }
 
     private void Update()
@@ -63,15 +68,20 @@ public class WaveSpawner : MonoBehaviour {
             }
         }
 
-        if (waveCooldown <= 0.0f)
+        if (state == SpawnState.COUNTING)
         {
-            if (state != SpawnState.SPAWNING)
+            if (waveCountDown <= 0.0f)
             {
-                StartCoroutine(SpawnWave(waves[nextWave]));            }
-        }
-        else
-        {
-            waveCooldown -= Time.deltaTime;
+                if (state != SpawnState.SPAWNING)
+                {
+                    waveCountDown = waveCooldown;
+                    StartCoroutine(SpawnWave(waves[nextWave]));
+                }
+            }
+            else
+            {
+                waveCountDown -= Time.deltaTime;
+            }
         }
     }
 
@@ -98,6 +108,9 @@ public class WaveSpawner : MonoBehaviour {
         // spawn
         for(int i = 0; i< wave.count; i++)
         {
+            while (!playerObject.activeSelf)
+                yield return new WaitForSeconds(1.0f);
+
             SpawnEnemy(waves[nextWave].enemyTypes[Random.Range(0, waves[nextWave].enemyTypes.Length)]);
             yield return new WaitForSeconds(1.0f / wave.rate);
         }
@@ -127,13 +140,16 @@ public class WaveSpawner : MonoBehaviour {
     {
         Debug.Log("Wave completed");
         state = SpawnState.COUNTING;
-        waveCountdown = waveCooldown;
-        nextWave++;
+
+        if (playerObject.activeSelf)
+            nextWave++;
+
         if (nextWave >= waves.Length)
         {
             // game complete? currently loops
             nextWave = 0;
         }
+        gm.StartWave(nextWave + 1);
     }
 
 }

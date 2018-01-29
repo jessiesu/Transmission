@@ -331,7 +331,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -792330533
+  randomSeed: 713735505
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5271,6 +5271,30 @@ MonoBehaviour:
     - {fileID: 4009719027547662, guid: f2e5b1920e3140e4f82cacec1976565c, type: 2}
     - {fileID: 4009719027547662, guid: 3ad9e0ae0d7cc804396dada93c69c870, type: 2}
     count: 20
+    rate: 5
+  - name: Wave 2
+    enemyTypes:
+    - {fileID: 4009719027547662, guid: f2e5b1920e3140e4f82cacec1976565c, type: 2}
+    - {fileID: 4009719027547662, guid: 3ad9e0ae0d7cc804396dada93c69c870, type: 2}
+    count: 30
+    rate: 5
+  - name: Wave 3
+    enemyTypes:
+    - {fileID: 4009719027547662, guid: f2e5b1920e3140e4f82cacec1976565c, type: 2}
+    - {fileID: 4009719027547662, guid: 3ad9e0ae0d7cc804396dada93c69c870, type: 2}
+    count: 40
+    rate: 5
+  - name: Wave 3
+    enemyTypes:
+    - {fileID: 4009719027547662, guid: f2e5b1920e3140e4f82cacec1976565c, type: 2}
+    - {fileID: 4009719027547662, guid: 3ad9e0ae0d7cc804396dada93c69c870, type: 2}
+    count: 50
+    rate: 5
+  - name: Wave 4
+    enemyTypes:
+    - {fileID: 4009719027547662, guid: f2e5b1920e3140e4f82cacec1976565c, type: 2}
+    - {fileID: 4009719027547662, guid: 3ad9e0ae0d7cc804396dada93c69c870, type: 2}
+    count: 80
     rate: 5
   waveCooldown: 5
   spawnPoints:
