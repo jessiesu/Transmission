@@ -77,7 +77,13 @@ public class PlayerController : MonoBehaviour {
     private Color redShieldColor = new Color(1.0f, 0.5f, 0.5f);
     private Color blueShieldColor = new Color(0.5f, 0.5f, 1.0f);
 
-	void Start()
+    private void Awake()
+    {
+        GameObject shieldGO = GameObject.Find("PlayerShield");
+        shieldSprite = shieldGO.GetComponent<SpriteRenderer>();
+    }
+
+    void Start()
 	{
 		//Get and store a reference to the Rigidbody2D component so that we can access it.
 		rb2d = GetComponent<Rigidbody2D> ();
@@ -90,9 +96,6 @@ public class PlayerController : MonoBehaviour {
         gm.ChangePhase(gm.CurrentPhase);
 
         playerStats = new PlayerStats(maxLife, gm, this);
-
-        GameObject shieldGO = GameObject.Find("PlayerShield");
-        shieldSprite = shieldGO.GetComponent<SpriteRenderer>();
 	}
 
     Vector2 GetMouseVector()
