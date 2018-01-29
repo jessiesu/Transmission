@@ -14,6 +14,9 @@ public class BasicEnemy : PhasedGameObject {
 
     public int scoreValue = 25;
 
+    public AudioClip shootSound;
+    public AudioClip deathSound;
+
     [HideInInspector]
     public bool pathEnded = false;
 
@@ -28,6 +31,8 @@ public class BasicEnemy : PhasedGameObject {
     private float fireRate = 0.5f;
     private float timeToFire = 0;
     private float bulletSpeed = 15.0f;
+    private AudioSource audioSourceShoot;
+    private AudioSource audioSourceDeath;
 
     private void Start()
     {
@@ -44,6 +49,11 @@ public class BasicEnemy : PhasedGameObject {
 
         // start nenw path to the target and return the result to OnPathComplete
         seeker.StartPath(transform.position, target.position, OnPathComplete);
+
+        audioSourceShoot = GameObject.Find("SoundEffectsEnemyShoot").GetComponent<AudioSource>();
+        audioSourceShoot.clip = shootSound;
+        audioSourceDeath = GameObject.Find("SoundEffectsEnemyDeath").GetComponent<AudioSource>();
+        audioSourceDeath.clip = deathSound;
 
         StartCoroutine(UpdatePath());
         // call base "Start" function (PhasedGameObject)
@@ -136,6 +146,7 @@ public class BasicEnemy : PhasedGameObject {
                 Destroy(gameObject);
                 Destroy(other.gameObject);
                 gm.UpdateScore(scoreValue);
+                audioSourceDeath.Play();
             }
         }
     }
@@ -145,5 +156,6 @@ public class BasicEnemy : PhasedGameObject {
         GameObject clone = Instantiate(bulletPrefab, transform.position, transform.rotation);
         Rigidbody2D cloneRb = clone.GetComponent<Rigidbody2D>();
         cloneRb.velocity = bulletSpeed * direction;
+        audioSourceShoot.Play();
     }
 }

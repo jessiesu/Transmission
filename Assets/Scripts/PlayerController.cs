@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour {
     public GameObject shootPrefabRed;
     public Sprite spriteBlue;
     public Sprite spriteRed;
+    public AudioClip shootSound;
+    public AudioClip deathSound;
 
     private GameManager gm;
     private List<PlayerAction> moveset = new List<PlayerAction>();
@@ -47,6 +49,8 @@ public class PlayerController : MonoBehaviour {
     private SpriteRenderer shieldSprite; //damage immunity (activated by boost)
     private Color redShieldColor = new Color(1.0f, 0.5f, 0.5f);
     private Color blueShieldColor = new Color(0.5f, 0.5f, 1.0f);
+    private AudioSource audioSourceShoot;
+    private AudioSource audioSourceDeath;
 
 	void Start()
 	{
@@ -62,7 +66,12 @@ public class PlayerController : MonoBehaviour {
 
         GameObject shieldGO = GameObject.Find("PlayerShield");
         shieldSprite = shieldGO.GetComponent<SpriteRenderer>();
-	}
+
+        audioSourceShoot = GameObject.Find("SoundEffectsPlayerShoot").GetComponent<AudioSource>();
+        audioSourceShoot.clip = shootSound;
+        audioSourceDeath = GameObject.Find("SoundEffectsPlayerDeath").GetComponent<AudioSource>();
+        audioSourceDeath.clip = deathSound;
+    }
 
     Vector2 GetMouseVector()
     {
@@ -92,6 +101,7 @@ public class PlayerController : MonoBehaviour {
         Collider2D playerCollider = this.GetComponent<Collider2D>();
         projRb2d.position = rb2d.position + (gameObject.transform.localScale.magnitude * bulletVector);
         projRb2d.velocity = bulletVector * shootSpeed;
+        audioSourceShoot.Play();
     }
 
     void PhaseSwitch()
@@ -165,6 +175,7 @@ public class PlayerController : MonoBehaviour {
             PhasedGameObject pso = other.GetComponent<PhasedGameObject>();
             if ((pso.objectPhase & gm.CurrentPhase) == 0 && !shielded)
             {
+                audioSourceDeath.Play();
                 gameObject.SetActive(false);
                 gm.RespawnPlayer(gameObject, 1);
             }

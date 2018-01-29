@@ -167,6 +167,8 @@ MonoBehaviour:
   forceMode: 0
   nextWaypointDist: 3
   scoreValue: 25
+  shootSound: {fileID: 8300000, guid: 6094455851b4bb24b88948936ad55cb4, type: 3}
+  deathSound: {fileID: 8300000, guid: f1e58777b5b3888499523dbed2870010, type: 3}
   pathEnded: 0
   bulletPrefab: {fileID: 152844, guid: 9c9fab2cab1257e4181631d6587a0375, type: 2}
   deathParticle: {fileID: 1972380500365224, guid: cd276566d213e064fba55b8302452980,
