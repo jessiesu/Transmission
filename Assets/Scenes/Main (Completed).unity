@@ -3728,7 +3728,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 14.3, y: 0}
+  m_Offset: {x: 13.85, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -3739,7 +3739,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.3, y: 31.64}
+  m_Size: {x: 0.6, y: 31.64}
   m_EdgeRadius: 0
 --- !u!61 &214482660
 BoxCollider2D:
@@ -3753,7 +3753,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -14.3}
+  m_Offset: {x: 0, y: -13.85}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -3764,7 +3764,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 31.64, y: 3.3}
+  m_Size: {x: 31.64, y: 0.6}
   m_EdgeRadius: 0
 --- !u!61 &214482661
 BoxCollider2D:
@@ -3778,7 +3778,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 14.3}
+  m_Offset: {x: 0, y: 13.85}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -3789,7 +3789,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 31.64, y: 3.3}
+  m_Size: {x: 31.64, y: 0.6}
   m_EdgeRadius: 0
 --- !u!61 &214482662
 BoxCollider2D:
@@ -3803,7 +3803,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -14.3, y: 0}
+  m_Offset: {x: -13.85, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -3814,7 +3814,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.3, y: 31.64}
+  m_Size: {x: 0.6, y: 31.64}
   m_EdgeRadius: 0
 --- !u!114 &214482663
 MonoBehaviour:
@@ -5366,7 +5366,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
