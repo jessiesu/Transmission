@@ -147,4 +147,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPhase: 2
   isPlayerProjectile: 0
-  lifetime: 5
+  lifetime: 20

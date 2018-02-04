@@ -31,9 +31,9 @@ public class BasicEnemy : PhasedGameObject {
     public GameObject bulletPrefab;
 	public GameObject deathParticle;
 
-    private float fireRate = 0.5f;
+    private float fireRate = 5f;
     private float timeToFire = 0;
-    private float bulletSpeed = 30.0f;
+    private float bulletSpeed = 15.0f;
     private AudioSource audioSourceShoot;
     private AudioSource audioSourceDeath;
 
